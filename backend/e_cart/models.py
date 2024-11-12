@@ -13,6 +13,7 @@ class Item(models.Model):
         ('office_study_table', 'Office & Study Table'),
         ('chair', 'Chair'),
         ('center_table', 'Center Table'),
+        ('office_chair',"Office Chair")
     ]
 
     name = models.CharField(max_length=255)
@@ -33,8 +34,7 @@ class Item(models.Model):
 
 class Image(models.Model):
     item = models.ForeignKey(Item, related_name='images', on_delete=models.CASCADE)
-    image_path = models.URLField()  # Use ImageField for image paths
-
+    image_path = models.URLField()  
     def __str__(self):
         return f'Image for {self.item.name}'
 
@@ -49,13 +49,28 @@ class Review(models.Model):
         return f'Review by {self.username} for {self.item.name}'
     
 class Cart(models.Model):
+    # STATUS_CHOICES = [
+    #     ('in_cart', 'In Cart'),
+    #     ('ordered', 'Ordered'),
+    #     ('delivered', 'Delivered'),
+    # ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cart_items')
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='cart_entries')
     quantity = models.PositiveIntegerField(default=1)
     added_at = models.DateTimeField(auto_now_add=True)
+    # status = models.CharField(max_length=50, choices=STATUS_CHOICES)  
 
     class Meta:
         unique_together = ('user', 'item')  # Ensure the same item isn't added multiple times for a user.
 
     def __str__(self):
         return f"{self.quantity} of {self.item.name} for {self.user.username}"
+    
+class WishList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wishlist_items')  # Ensure this is different from 'cart_items'
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='wishlist_entries')  # Ensure this is different from 'cart_entries'
+    class Meta:
+        unique_together = ('user', 'item')  # Ensure the same item isn't added multiple times for a user.
+
+    def __str__(self):
+        return f"{self.item.name} for {self.user.username}"

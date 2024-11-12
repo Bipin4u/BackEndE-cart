@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, Image, Review, Cart
+from .models import Item, Image, Review, Cart, WishList
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,7 +39,6 @@ class SingleItemSerializer(serializers.ModelSerializer):
     discount_price = serializers.SerializerMethodField(method_name = 'get_discount_price')
     images = ImageSerializer(many=True, read_only=True)
     reviews = ReviewSerializer(many=True, read_only=True)
-
     class Meta:
         model = Item
         fields = [
@@ -55,9 +54,30 @@ class SingleItemSerializer(serializers.ModelSerializer):
         return None
 
 class CartSerializer(serializers.ModelSerializer):
-    item = SingleItemSerializer(read_only=True) 
     class Meta:
-            model = Cart
-            fields = ['id', 'user', 'item', 'item_id', 'quantity', 'added_at']  
+        model = Cart
+        fields = ['id', 'user', 'item', 'quantity', 'added_at']
+
+class GetCartSerializer(serializers.ModelSerializer):
+    images = ImageSerializer(many=True, read_only=True)
+    item = ItemSerializer(read_only=True)
+    class Meta:
+        model = Cart
+        fields = ['id', 'user', 'item', 'quantity', 'added_at', 'images' , 'item']
+
+class WishListSerializer(serializers.ModelSerializer):
+    images = ImageSerializer(many=True, read_only=True)
+    item = ItemSerializer(read_only=True)
+    class Meta:
+        model = WishList
+        fields = ['id', 'user', 'item', 'images']
+
+class SetWishListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WishList
+        fields = ['id', 'user', 'item']
+
+
+
 
 

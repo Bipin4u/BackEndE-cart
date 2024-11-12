@@ -22,3 +22,4 @@ class ReviewAdmin(admin.ModelAdmin):
     ordering = ('-date',)  # Default ordering
 
 admin.site.register(Cart)
+admin.site.register(WishList)
