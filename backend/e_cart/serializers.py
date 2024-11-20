@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, Image, Review, Cart, WishList
+from .models import Item, Image, Review, Cart, WishList, Orders
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -78,6 +78,22 @@ class SetWishListSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'item']
 
 
+class ReviewListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['id','item_id', 'username','title' ,'rating','comment','date']
+
+class SetReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['user','item', 'title' , 'username','rating','comment']
+
+class OrderSerializer(serializers.ModelSerializer):
+    images = ImageSerializer(many=True, read_only=True)
+    item = ItemSerializer(read_only=True)
+    class Meta:
+        model = Orders
+        fields = ['id', 'item', 'images']
 
 
 

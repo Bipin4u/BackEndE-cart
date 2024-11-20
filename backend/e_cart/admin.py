@@ -3,7 +3,7 @@ from .models import *
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'price', 'rating', 'discount')  # Columns to display in the list view
+    list_display = ('id','name', 'type', 'price', 'rating', 'discount')  # Columns to display in the list view
     search_fields = ('name', 'type', 'description')  # Fields to search
     list_filter = ('type', 'rating', 'discount')  # Filters for the sidebar
     ordering = ('name',)  # Default ordering
@@ -16,10 +16,14 @@ class ImageAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('item', 'username', 'rating', 'date')  # Columns to display in the list view
+    list_display = ('id','item', 'username', 'rating', 'date','title')  # Columns to display in the list view
     search_fields = ('item__name', 'username', 'comment')  # Fields to search
     list_filter = ('rating', 'date')  # Filters for the sidebar
     ordering = ('-date',)  # Default ordering
 
 admin.site.register(Cart)
 admin.site.register(WishList)
+
+@admin.register(Orders)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('id','item', 'user')  # Columns to display in the list view

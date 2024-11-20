@@ -169,5 +169,54 @@ def AddWishList(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET'])
+def ReviewItem(request,id:int):
+    cart_items = Review.objects.filter(item=id)
+    serializer = ReviewListSerializer(cart_items, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def ReviewAddItem(request):
+    user = request.user 
+    if request.method == 'POST':       
+        data = request.data.copy()
+        data['user'] = user.id  
+        serializer = SetReviewSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save(user=user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+#
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def OrderItem(request):
+    user = request.user 
+    order_item = Orders.objects.filter(user=user)
+    serializer = OrderSerializer(order_item, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+#Used to fetch review in ReviewRating.
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def MyReview(request,id:int):
+    user = request.user 
+    order_item = Review.objects.filter(user=user,item=id)
+    serializer = ReviewListSerializer(order_item, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+#Used to Update a Review in MyOrders
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def UpdateMyReview(request,id:int):
+    user = request.user       
+    data = request.data.copy()
+    data['user'] = user.id  
+    basedata = Review.objects.get(id=id)
+    serializer = SetReviewSerializer(instance=basedata,data=data)
+    if serializer.is_valid():
+        serializer.save(user=user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
