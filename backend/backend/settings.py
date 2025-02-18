@@ -57,6 +57,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',  # React Frontend
     'http://127.0.0.1:3000',
+    'http://localhost:5173/'
 ]
 
 # OR if using Django CORS headers version >= 4.0.0
