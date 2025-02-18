@@ -58,6 +58,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://52.66.237.116'
 ]
+ALLOWED_HOSTS = ['52.66.237.116', 'localhost', '127.0.0.1']
+
 
 # OR if using Django CORS headers version >= 4.0.0
 CORS_ALLOW_ALL_ORIGINS = True
