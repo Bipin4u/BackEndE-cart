@@ -54,7 +54,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ALLOWED_ORIGINS = ["*"]
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173'
+]
 
 # OR if using Django CORS headers version >= 4.0.0
 CORS_ALLOW_ALL_ORIGINS = True
