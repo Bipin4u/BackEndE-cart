@@ -56,7 +56,7 @@ MIDDLEWARE = [
 ]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
-    'http://52.66.237.116'
+    'http://52.66.237.116',
     'https://main.d1x83hud6dco2g.amplifyapp.com'
 ]
 ALLOWED_HOSTS = ['52.66.237.116', 'localhost', '127.0.0.1']
