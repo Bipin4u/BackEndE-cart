@@ -57,9 +57,9 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://52.66.237.116',
-    'http://main.d1x83hud6dco2g.amplifyapp.com'
+    'http://65.0.99.250:3000'
 ]
-ALLOWED_HOSTS = ['52.66.237.116', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['54.242.183.100', 'localhost', '127.0.0.1']
 
 
 # OR if using Django CORS headers version >= 4.0.0
